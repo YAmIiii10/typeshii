@@ -30,6 +30,7 @@ export const FileUpload = ({ onDataLoad, onImageLoad }: FileUploadProps) => {
           title: "Image uploaded successfully",
           description: "Processing image for OCR analysis..."
         });
+        setIsProcessing(false);
         return;
       }
       
@@ -46,6 +47,7 @@ export const FileUpload = ({ onDataLoad, onImageLoad }: FileUploadProps) => {
           title: "Excel file processed",
           description: `Loaded ${data.length} rows from ${file.name}`
         });
+        setIsProcessing(false);
         return;
       }
       
@@ -61,8 +63,10 @@ export const FileUpload = ({ onDataLoad, onImageLoad }: FileUploadProps) => {
               title: "CSV file processed",
               description: `Loaded ${results.data.length} rows from ${file.name}`
             });
+            setIsProcessing(false);
           },
           error: (error) => {
+            setIsProcessing(false);
             throw new Error(`CSV parsing error: ${error.message}`);
           }
         });
@@ -80,6 +84,7 @@ export const FileUpload = ({ onDataLoad, onImageLoad }: FileUploadProps) => {
           title: "JSON file processed",
           description: `Loaded ${arrayData.length} records from ${file.name}`
         });
+        setIsProcessing(false);
         return;
       }
       
@@ -92,7 +97,6 @@ export const FileUpload = ({ onDataLoad, onImageLoad }: FileUploadProps) => {
         description: error instanceof Error ? error.message : "Unknown error occurred",
         variant: "destructive"
       });
-    } finally {
       setIsProcessing(false);
     }
   }, [onDataLoad, onImageLoad, toast]);

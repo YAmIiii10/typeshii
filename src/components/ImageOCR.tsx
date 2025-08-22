@@ -29,16 +29,19 @@ export const ImageOCR = ({ imageFile, onTextExtracted }: ImageOCRProps) => {
       const preview = URL.createObjectURL(imageFile);
       setImagePreview(preview);
 
-      // Process with Tesseract
+      // Process with Tesseract - optimized settings for speed
       const { data: { text } } = await Tesseract.recognize(
         imageFile,
-        'eng',
+        'eng', // Keep English only for speed
         {
           logger: m => {
             if (m.status === 'recognizing text') {
               setProgress(Math.round(m.progress * 100));
             }
           }
+          // Optimized settings for faster processing
+          tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK,
+          tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?@#$%^&*()_+-=[]{}|;:\'\"<>?/~` ',
         }
       );
 

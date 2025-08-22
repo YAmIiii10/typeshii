@@ -103,9 +103,6 @@ export const DataCleaning = ({ data, onDataCleaned }: DataCleaningProps) => {
     if (data.length === 0) return data;
     
     const organizedData: any[] = [];
-    const moneyValues: any[] = [];
-    const dateValues: any[] = [];
-    const numericColumns: { [key: string]: any[] } = {};
     
     data.forEach((row, rowIndex) => {
       const newRow: any = {};
@@ -173,6 +170,7 @@ export const DataCleaning = ({ data, onDataCleaned }: DataCleaningProps) => {
     
     return finalData;
   };
+
   const analyzeDataQuality = () => {
     setIsAnalyzing(true);
     
